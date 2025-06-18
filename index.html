@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Bantuan untuk Palestina - Donasi dan Bukti Kondisi</title>
+<style>
+  /* Reset & Base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: #f8f9fa;
+    color: #1a1a1a;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  a {
+    color: #2563eb;
+    text-decoration: none;
+  }
+  a:hover, a:focus {
+    text-decoration: underline;
+    outline: none;
+  }
+  header {
+    padding: 0 24px;
+  }
+  /* Red box for the title only */
+  .title-box {
+    background-color: #a52a2a;
+    color: white;
+    padding: 24px 16px;
+    max-width: 480px;
+    margin: 32px auto 8px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 0.1);
+    border-radius: 8px;
+    font-size: clamp(1.8rem, 8vw, 2.8rem);
+    font-weight: 700;
+  }
+  /* Description text outside of the red box */
+  .description-text {
+    max-width: 480px;
+    margin: 0 auto 32px;
+    font-size: clamp(0.9rem, 4vw, 1.3rem);
+    font-weight: 500;
+    color: #1a1a1a;
+    line-height: 1.4;
+    padding: 0 16px;
+  }
+  main {
+    flex: 1;
+    max-width: 480px;
+    margin: 0 auto 48px;
+    padding: 0 16px 48px;
+    width: 100%;
+  }
+  section {
+    margin-bottom: 48px;
+  }
+  section h2 {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+    margin-bottom: 20px;
+    border-bottom: 3px solid #a52a2a;
+    display: inline-block;
+    padding-bottom: 6px;
+  }
+  /* Description Section */
+  #description p {
+    max-width: 100%;
+    margin: 0 auto 16px;
+    font-size: clamp(0.85rem, 4vw, 1.1rem);
+    color: #333;
+  }
+
+  /* Gallery */
+  .gallery {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 400px) {
+    .gallery {
+      grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+      gap: 20px;
+    }
+  }
+  .gallery-item {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgb(0 0 0 / 0.1);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  .gallery-item img,
+  .gallery-item video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    user-select: none;
+    border-bottom: 1px solid #ddd;
+    transition: transform 0.3s ease;
+  }
+  .gallery-item:hover img,
+  .gallery-item:hover video {
+    transform: scale(1.05);
+  }
+  .gallery-caption {
+    padding: 12px 16px;
+    font-size: clamp(0.85rem, 3vw, 1rem);
+    color: #444;
+    flex-grow: 1;
+  }
+
+  /* Donation Section */
+  #donation {
+    background: #a52a2a;
+    color: white;
+    border-radius: 24px;
+    padding: 28px 20px;
+    box-shadow: 0 8px 28px rgb(0 0 0 / 0.2);
+    max-width: 420px;
+    margin: 32px auto 0;
+    text-align: center;
+  }
+  #donation h2 {
+    margin-bottom: 16px;
+    border-color: #ffbaba;
+  }
+  #donation p {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    margin-bottom: 18px;
+    line-height: 1.4;
+  }
+  #donation .account-info {
+    font-weight: 700;
+    font-size: clamp(1rem, 3vw, 1.15rem);
+    letter-spacing: 0.03em;
+    margin-bottom: 16px;
+    word-break: break-word;
+  }
+  #donation strong {
+    color: #fff3f3;
+  }
+  #donation button {
+    padding: 14px 28px;
+    background: #ff6b6b;
+    border: none;
+    border-radius: 36px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgb(255 107 107 / 0.5);
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+  #donation button:hover,
+  #donation button:focus {
+    background: #ff5252;
+    outline: none;
+  }
+
+  /* QR Code Image */
+  #qrCodeContainer {
+    margin: 20px auto 0;
+    max-width: 240px;
+  }
+  #qrCodeContainer img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  /* Footer */
+  footer {
+    padding: 16px 16px;
+    background: #8b0000;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  footer a {
+    color: #fff9f9;
+    text-decoration: underline;
+  }
+  footer a:hover, footer a:focus {
+    color: #ffc4c4;
+  }
+
+  /* Modal Overlay for images/videos */
+  #modalOverlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    padding: 12px;
+  }
+  #modalOverlay.active {
+    display: flex;
+  }
+  #modalContent {
+    max-width: 90vw;
+    max-height: 85vh;
+    border-radius: 16px;
+    box-shadow: 0 0 24px rgba(255,255,255,0.25);
+    position: relative;
+    background: #111111;
+  }
+  #modalContent img, #modalContent video {
+    max-width: 100%;
+    max-height: 85vh;
+    border-radius: 16px;
+    display: block;
+  }
+  #modalCloseBtn {
+    position: absolute;
+    top: 6px; right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    padding: 4px 8px;
+    line-height: 1;
+  }
+  #modalCloseBtn:hover,
+  #modalCloseBtn:focus {
+    color: #ff6b6b;
+    outline: none;
+  }
+
+  /* Responsive text scaling for mobile */
+  @media (max-width: 480px) {
+    .title-box {
+      margin: 16px auto 8px;
+      font-size: 2rem;
+      padding: 16px 12px;
+      max-width: 90vw;
+    }
+    header p {
+      font-size: 1rem;
+      max-width: 90vw;
+    }
+    main {
+      max-width: 100vw;
+      margin: 0 auto 48px;
+      padding: 0 12px 48px;
+    }
+    section h2 {
+      font-size: 1.6rem;
+    }
+    #donation {
+      max-width: 90vw;
+      padding: 24px 16px;
+    }
+    #donation p, #donation .account-info {
+      font-size: 1rem;
+    }
+    #qrCodeContainer {
+      max-width: 180px;
+      margin: 16px auto 0;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="title-box" role="heading" aria-level="1">Bencana di Palestina</div>
+<header>
+  <p class="description-text">
+    Palestina saat ini mengalami bencana kemanusiaan yang sangat parah akibat konflik berkepanjangan yang menyebabkan kerusakan besar pada infrastruktur,
+    korban jiwa, dan penderitaan mendalam bagi penduduk sipil, terutama anak-anak dan keluarga yang tidak berdosa.
+  </p>
+  <p class="description-text">
+    Situs ini menyajikan bukti visual nyata berupa foto dan video kondisi terkini dari lokasi bencana serta menyediakan akses donasi untuk membantu meringankan penderitaan mereka.
+  </p>
+</header>
+<main>
+  <section id="description" aria-labelledby="desc-title">
+    <h2 id="desc-title">Situasi Kemanusiaan dan Kondisi Lapangan</h2>
+    <p>
+      Wilayah Gaza dan Tepi Barat menghadapi kerusakan berat pada rumah-rumah, fasilitas kesehatan, sekolah, dan infrastruktur dasar air dan listrik.
+      Ribuan warga terluka dan puluhan ribu mengungsi kehilangan tempat tinggal. Para tenaga medis dan organisasi kemanusiaan berjuang keras memberikan bantuan
+      dalam kondisi yang sangat terbatas dan berbahaya.
+    </p>
+    <p>
+      Anak-anak adalah yang paling rentan menghadapi trauma dan kekurangan pangan serta perawatan kesehatan. Komunitas internasional terus memantau dan
+      menyerukan penghentian kekerasan serta bantuan segera untuk memastikan keselamatan warga sipil.
+    </p>
+  </section>
+
+  <section aria-labelledby="evidence-title">
+    <h2 id="evidence-title">Bukti Kondisi di Palestina</h2>
+    <div class="gallery" aria-live="polite">
+      <article class="gallery-item" tabindex="0" role="button" aria-label="Foto reruntuhan bangunan hancur akibat bencana di Palestina">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4a51aa04-461d-47e5-8bdb-922a79a7b437.png" alt="Reruntuhan bangunan hancur akibat serangan di Palestina, memperlihatkan kehancuran besar" loading="lazy" />
+        <p class="gallery-caption">Reruntuhan akibat serangan, kehancuran yang melanda kawasan pemukiman di Palestina.</p>
+      </article>
+      <article class="gallery-item" tabindex="0" role="button" aria-label="Video dokumentasi kondisi bencana di Palestina">
+        <video controls preload="metadata" poster="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/64a97fbe-04b4-40e0-a03e-de80c01ed27e.png" aria-label="Video dokumentasi kondisi bencana di Palestina" >
+          <source src="https://interactive-examples.mdn.mozilla.net/media/examples/flower.webm" type="video/webm" />
+          <source src="https://interactive-examples.mdn.mozilla.net/media/examples/flower.mp4" type="video/mp4" />
+          Browser Anda tidak mendukung elemen video.
+        </video>
+        <p class="gallery-caption">Video dokumentasi situasi darurat yang memperlihatkan kondisi warga terdampak secara langsung.</p>
+      </article>
+      <article class="gallery-item" tabindex="0" role="button" aria-label="Foto anak kecil di tengah reruntuhan rumah">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c732e5c2-2987-47d0-ad88-be72e2f531a0.png" alt="Seorang anak kecil di tengah reruntuhan rumah, menggambarkan penderitaan anak-anak di daerah konflik Palestina" loading="lazy" />
+        <p class="gallery-caption">Anak-anak Palestina sangat terdampak oleh konflik dan bencana yang terjadi.</p>
+      </article>
+      <article class="gallery-item" tabindex="0" role="button" aria-label="Foto ambulans evakuasi warga">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/83d19328-8bf2-4701-9387-af233c532f36.png" alt="Ambulans sedang membantu evakuasi korban dari area yang terdampak bencana di Palestina" loading="lazy" />
+        <p class="gallery-caption">Evakuasi korban oleh tim medis di daerah konflik.</p>
+      </article>
+      <article class="gallery-item" tabindex="0" role="button" aria-label="Foto warga mengantri bantuan makanan">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6613c697-fc1a-4d1e-a1fb-4939280eee9e.png" alt="Warga Palestina mengantri untuk menerima bantuan makanan dari organisasi kemanusiaan" loading="lazy" />
+        <p class="gallery-caption">Distribusi bantuan pangan kepada warga terdampak bencana.</p>
+      </article>
+      <article class="gallery-item" tabindex="0" role="button" aria-label="Video warga menerima bantuan">
+        <video controls preload="metadata" poster="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8c62d490-9702-41aa-a2a9-2ddef54f3ae4.png" aria-label="Video warga Palestina menerima bantuan kemanusiaan">
+          <source src="https://interactive-examples.mdn.mozilla.net/media/examples/flower.webm" type="video/webm" />
+          <source src="https://interactive-examples.mdn.mozilla.net/media/examples/flower.mp4" type="video/mp4" />
+          Browser Anda tidak mendukung elemen video.
+        </video>
+        <p class="gallery-caption">Video warga menerima bantuan kemanusiaan penting untuk bertahan hidup.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="donation" aria-labelledby="donation-title">
+    <h2 id="donation-title">Donasi untuk Palestina</h2>
+    <p>
+      Situasi saudara kita di Palestina sangat memprihatinkan. Kami memohon dengan sangat, <strong>minta tolong</strong> kepada Anda semua untuk memberikan bantuan melalui donasi.
+      Setiap rupiah sangat berarti untuk pangan, obat-obatan, dan kebutuhan mendesak lainnya.
+    </p>
+    <p class="account-info" aria-label="Informasi rekening donasi SeaBank">
+      Donasi via SeaBank:<br />
+      <strong>Nama Akun:</strong> Yayasan Bantuan Palestina<br />
+      <strong>No. Rekening:</strong> 901955030257<br />
+      <strong>Bank:</strong> SeaBank
+    </p>
+    <div id="qrCodeContainer" aria-label="Kode QR untuk donasi via SeaBank">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?data=SeaBank%20Yayasan%20Bantuan%20Palestina%20901955030257&size=240x240" alt="Kode QR donasi SeaBank dengan nomor rekening 901955030257 untuk Yayasan Bantuan Palestina" />
+    </div>
+    <p>Terima kasih atas kebaikan hati dan donasi yang Anda berikan. Bantuan Anda akan mengubah banyak kehidupan.</p>
+    <button id="donateBtn" aria-label="Buka halaman donasi SeaBank">Donasi Sekarang</button>
+  </section>
+</main>
+<footer>
+  Terima kasih atas perhatian dan bantuan Anda. Bersama kita bisa meringankan penderitaan Palestina.
+</footer>
+
+<!-- Modal for enlarged media -->
+<div id="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+  <div id="modalContent">
+    <button id="modalCloseBtn" aria-label="Tutup media">&times;</button>
+    <div id="modalMedia"></div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    'use strict';
+
+    const donateBtn = document.getElementById('donateBtn');
+    donateBtn.addEventListener('click', () => {
+      window.open('https://seabank.example.com/donasi', '_blank', 'noopener');
+    });
+
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalMedia = document.getElementById('modalMedia');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+    function showModal(type, src, alt) {
+      modalMedia.innerHTML = '';
+      if(type === 'img') {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = alt || '';
+        modalMedia.appendChild(img);
+      }
+      else if(type === 'video') {
+        const video = document.createElement('video');
+        video.controls = true;
+        video.src = src;
+        video.alt = alt || '';
+        video.style.maxWidth = '100%';
+        modalMedia.appendChild(video);
+      }
+      modalOverlay.setAttribute('aria-hidden', 'false');
+      modalOverlay.style.display = 'flex';
+      modalCloseBtn.focus();
+    }
+
+    function closeModal() {
+      modalOverlay.setAttribute('aria-hidden', 'true');
+      modalOverlay.style.display = 'none';
+      modalMedia.innerHTML = '';
+    }
+
+    modalCloseBtn.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', (e) => {
+      if(e.target === modalOverlay) closeModal();
+    });
+    window.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && modalOverlay.style.display === 'flex') {
+        closeModal();
+      }
+    });
+
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        const video = item.querySelector('video');
+        if(img) {
+          showModal('img', img.src, img.alt);
+        } else if(video) {
+          const source = video.querySelector('source');
+          if(source) {
+            showModal('video', source.src, video.getAttribute('aria-label'));
+          }
+        }
+      });
+      item.addEventListener('keypress', e => {
+        if(e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        }
+      });
+    });
+  })();
+</script>
+</body>
+</html>
+
