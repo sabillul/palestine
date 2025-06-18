@@ -1,0 +1,2 @@
+# palestine
+bantuan palestine
